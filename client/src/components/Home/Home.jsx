@@ -6,7 +6,7 @@ import logo from "../../assets/logo2.png";
 import loader from "../../assets/loader_1308.gif";
 import styles from "./Home.module.css";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getVideogames,
@@ -92,6 +92,11 @@ export default function Home() {
     dispatch(setPage(1));
   }
 
+  function handleCreatedGame() {
+    dispatch(clearFilters());
+    dispatch(setPage(1));
+  }
+
   return (
     <div>
       <div className={styles.front}>
@@ -103,7 +108,7 @@ export default function Home() {
 
       <div className={styles.createButton}>
         <Link to={"/videogame"}>
-          <button>Create VideoGame</button>
+          <button onClick={handleCreatedGame}>Create VideoGame</button>
         </Link>
       </div>
 

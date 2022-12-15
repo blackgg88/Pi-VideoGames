@@ -1,10 +1,8 @@
 import { useState } from "react";
 import {
   postVideogame,
-  getVideogames,
   getPlatforms,
   getGenres,
-  clearFilters,
   clearVideoGames,
 } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
@@ -60,7 +58,6 @@ export default function Form() {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(postVideogame(game));
-    dispatch(clearFilters());
     dispatch(clearVideoGames());
 
     setGame({

@@ -1,14 +1,16 @@
 import { useDispatch, useSelector } from "react-redux";
 import { setPage } from "../../redux/actions";
-import { useState } from "react";
-import next from "../../assets/next-svgrepo-com.svg";
-import prev from "../../assets/back-svgrepo-com.svg";
+import { useState, useEffect } from "react";
 import styles from "./Pagination.module.css";
 
 export default function Pagination({ totalPages }) {
   const dispatch = useDispatch();
   const page = useSelector((state) => state.page);
   const [input, setInput] = useState(page);
+
+  useEffect(() => {
+    setInput(page);
+  }, [page]);
 
   const nextPage = () => {
     dispatch(setPage(page + 1));

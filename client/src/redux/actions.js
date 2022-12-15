@@ -14,10 +14,12 @@ export const GENRES_FILTER = "GENRES_FILTER";
 export const FILTER_CREATED = "FILTER_CREATED";
 export const GET_BY_NAME = "GET_BY_NAME";
 
+const API_URL = "https://api-videogames-production.up.railway.app";
+
 export const getVideogames = () => {
   return async (dispatch) => {
     try {
-      const response = await fetch("http://localhost:3001/videogames");
+      const response = await fetch(API_URL + "/videogames");
       const data = await response.json();
 
       return dispatch({
@@ -39,9 +41,7 @@ export const getCopyGames = () => {
 export const getByName = (name) => {
   return async (dispatch) => {
     try {
-      const response = await fetch(
-        `http://localhost:3001/videogames?name=${name}`
-      );
+      const response = await fetch(API_URL + `/videogames?name=${name}`);
       const data = await response.json();
       if (typeof data === "string") {
         alert(data);
@@ -58,7 +58,7 @@ export const getByName = (name) => {
 export const getGenres = () => {
   return async (dispatch) => {
     try {
-      const response = await fetch("http://localhost:3001/genres");
+      const response = await fetch(API_URL + "/genres");
       const data = await response.json();
 
       return dispatch({
@@ -75,7 +75,7 @@ export const getGenres = () => {
 export const getPlatforms = () => {
   return async (dispatch) => {
     try {
-      const response = await fetch("http://localhost:3001/platforms");
+      const response = await fetch(API_URL + "/platforms");
       const data = await response.json();
 
       return dispatch({
@@ -92,7 +92,7 @@ export const getPlatforms = () => {
 export const getDeatails = (id) => {
   return async (dispatch) => {
     try {
-      const response = await fetch(`http://localhost:3001/videogame/${id}`);
+      const response = await fetch(API_URL + `/videogame/${id}`);
       const data = await response.json();
 
       return dispatch({
@@ -120,10 +120,7 @@ export const postVideogame = (videogame) => {
         body: game,
       };
 
-      const response = await fetch(
-        "http://localhost:3001/videogame",
-        requestOptions
-      );
+      const response = await fetch(API_URL + "/videogame", requestOptions);
 
       const data = await response.json();
 
