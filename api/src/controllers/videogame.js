@@ -1,7 +1,6 @@
 const { Videogame, Genre, Platform } = require("../db");
 
-require("dotenv").config();
-const { API_KEY } = process.env;
+const { API_KEY } = require("../../config");
 
 const fetch = require("node-fetch");
 
@@ -18,7 +17,6 @@ const getVideogame = async (idVideogame) => {
     });
 
     if (!videogameByDb) throw new Error("Error, Videogame not found");
-    // console.log(videogameByDb);
 
     videogameByDb = JSON.stringify(videogameByDb);
     videogameByDb = JSON.parse(videogameByDb);

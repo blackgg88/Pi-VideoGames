@@ -35,7 +35,7 @@ export default function Home() {
 
   platforms = [...new Set(platforms.map((pl) => pl.name))];
 
-  const howManyGames = 15;
+  const howManyGames = 12;
   const lastIndex = page * howManyGames;
   const firstIndex = lastIndex - howManyGames;
 
@@ -43,46 +43,38 @@ export default function Home() {
 
   const totalPages = Math.ceil(videogames?.length / howManyGames);
 
+  function handleFilters() {
+    dispatch(orderByName(filters.order));
+    dispatch(genresFilter(filters.genres));
+    dispatch(platformsFilter(filters.platforms));
+    dispatch(filterByCreated(filters.origin));
+  }
+
   useEffect(() => {
     !allVideogames.length && dispatch(getVideogames());
     !platforms.length && dispatch(getPlatforms());
     !genres.length && dispatch(getGenres());
-    dispatch(orderByName(filters.order));
-    dispatch(genresFilter(filters.genres));
-    dispatch(platformsFilter(filters.platforms));
-    dispatch(filterByCreated(filters.origin));
-  }, []);
+    handleFilters();
+  }, [filters]);
 
   function handleOrder(e) {
+    dispatch(setPage(1));
     dispatch(setFilter({ order: e.target.value }));
-    dispatch(orderByName(e.target.value));
-    dispatch(genresFilter(filters.genres));
-    dispatch(platformsFilter(filters.platforms));
-    dispatch(filterByCreated(filters.origin));
   }
 
   function handleFilterGenre(e) {
+    dispatch(setPage(1));
     dispatch(setFilter({ genres: e.target.value }));
-    dispatch(orderByName(filters.order));
-    dispatch(genresFilter(e.target.value));
-    dispatch(platformsFilter(filters.platforms));
-    dispatch(filterByCreated(filters.origin));
   }
 
   function handleFilterPlatform(e) {
+    dispatch(setPage(1));
     dispatch(setFilter({ platforms: e.target.value }));
-    dispatch(orderByName(filters.order));
-    dispatch(genresFilter(filters.genres));
-    dispatch(platformsFilter(e.target.value));
-    dispatch(filterByCreated(filters.origin));
   }
 
   function handleFilterCreated(e) {
+    dispatch(setPage(1));
     dispatch(setFilter({ origin: e.target.value }));
-    dispatch(orderByName(filters.order));
-    dispatch(genresFilter(filters.genres));
-    dispatch(platformsFilter(filters.platforms));
-    dispatch(filterByCreated(e.target.value));
   }
 
   function handleAllGames() {
@@ -184,7 +176,6 @@ export default function Home() {
           <img src={loader} alt="loader" />
         </div>
       ) : (
-        //AGREGAR WEA QUE DIGA QUE NO HAY JUEGOS
         <div>
           <div className={styles.cards}>
             {showGames?.map((videogame) => (

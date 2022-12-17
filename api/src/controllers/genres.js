@@ -1,14 +1,15 @@
 //Importamos Model de Genre
 const { Genre } = require("../db");
-require("dotenv").config();
-const { API_KEY } = process.env;
+// require("dotenv").config();
+// const { API_KEY } = process.env;
 // const axios = require("axios");
+const { API_KEY } = require("../../config");
 const fetch = require("node-fetch");
 
 const getGenres = async () => {
   let genresByDb = await Genre.findAll();
 
-  if (genresByDb.length >= 10) {
+  if (genresByDb.length) {
     return genresByDb;
   }
 
@@ -24,8 +25,8 @@ const getGenres = async () => {
 
   const data = await response.json();
 
-  data.results.forEach(async (currentGenre) => {
-    await Genre.findOrCreate({ where: { name: currentGenre.name } });
+  data.results.forEach( (currentGenre) => {
+    Genre.findOrCreate({ where: { name: currentGenre.name } });
   });
 
   genresByDb = await Genre.findAll();

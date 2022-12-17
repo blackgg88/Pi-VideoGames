@@ -1,6 +1,6 @@
 //Importamos el Model de Plataform
 const { Platform } = require("../db");
-const getVideoGames = require("./videogames");
+const { getVideoGames } = require("./videogames");
 
 const getPlatforms = async () => {
   let platformsByDb = await Platform.findAll();
@@ -10,8 +10,8 @@ const getPlatforms = async () => {
   const videogames = await getVideoGames();
 
   videogames.map((videogame) => {
-    videogame.platforms.map(
-      async (pl) => await Platform.findOrCreate({ where: { name: pl } })
+    videogame.platforms.map((pl) =>
+      Platform.findOrCreate({ where: { name: pl } })
     );
   });
 

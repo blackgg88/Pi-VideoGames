@@ -17,12 +17,13 @@ import {
 } from "./actions";
 
 const initialState = {
-  videogames: [],
   allGamesCopy: [],
+  videogames: [],
   allVideogames: [],
   genres: [],
   platforms: [],
   details: {},
+
   filters: {
     genres: "All",
     platforms: "All",

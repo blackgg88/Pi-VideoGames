@@ -1,7 +1,6 @@
-const { Videogame, Op, Genre, Platform } = require("../db");
+const { Videogame, Genre, Platform } = require("../db");
 
-require("dotenv").config();
-const { API_KEY } = process.env;
+const { API_KEY } = require("../../config");
 const fetch = require("node-fetch");
 
 const getVideoGames = async (name) => {

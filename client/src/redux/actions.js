@@ -14,7 +14,8 @@ export const GENRES_FILTER = "GENRES_FILTER";
 export const FILTER_CREATED = "FILTER_CREATED";
 export const GET_BY_NAME = "GET_BY_NAME";
 
-const API_URL = "https://api-videogames-production.up.railway.app";
+// const API_URL = "https://api-videogames-production.up.railway.app";
+const API_URL = "http://localhost:3001";
 
 export const getVideogames = () => {
   return async (dispatch) => {
