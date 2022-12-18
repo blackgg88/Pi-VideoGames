@@ -55,7 +55,7 @@ const getVideoGames = async (name) => {
   }
 
   //*******************RETORNA TODOS LOS JUEGOS DE LA API************************ */
-  const pages = 3;
+  const pages = 4;
 
   let allGames = [...gamesByDb];
 

@@ -2,6 +2,7 @@ const { Router } = require("express");
 const router = Router();
 const {
   getGenres,
+  getGenreByName,
   putGenre,
   postGenre,
   deleteGenre,
@@ -11,6 +12,18 @@ router.get("/", async (req, res) => {
   try {
     const genres = await getGenres();
     res.status(200).json(genres);
+  } catch (err) {
+    res.status(500).json(err.message);
+  }
+});
+
+router.get("/:name", async (req, res) => {
+  try {
+    const { name } = req.params;
+
+    const genre = await getGenreByName(name);
+
+    res.status(200).json(genre);
   } catch (err) {
     res.status(500).json(err.message);
   }

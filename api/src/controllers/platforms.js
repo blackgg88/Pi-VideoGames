@@ -15,15 +15,21 @@ const getPlatforms = async () => {
     );
   });
 
-  // data.results.forEach((game) => {
-  //   game.platforms.map((currentPlatform) =>
-  //     Platform.findOrCreate({ where: { name: currentPlatform.platform.name } })
-  //   );
-  // });
-
   platformsByDb = await Platform.findAll();
 
   return platformsByDb;
+};
+
+const getPlatformByName = async (name) => {
+  let platformsByDb = await Platform.findAll();
+
+  if (!platformsByDb.length) platformsByDb = await getPlatforms();
+
+  const platform = platformsByDb.filter((pl) => pl.name === name);
+
+  if (!platform.length) throw new Error("Platform not found");
+
+  return platform[0];
 };
 
 const putPlatform = async (id, name) => {
@@ -52,4 +58,10 @@ const deletePlatform = async (id) => {
 
   return "Platform successfully removed";
 };
-module.exports = { getPlatforms, putPlatform, postPlatform, deletePlatform };
+module.exports = {
+  getPlatforms,
+  getPlatformByName,
+  putPlatform,
+  postPlatform,
+  deletePlatform,
+};

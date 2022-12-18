@@ -25,19 +25,30 @@ const getGenres = async () => {
 
   const data = await response.json();
 
-  data.results.forEach( (currentGenre) => {
+  data.results.forEach((currentGenre) => {
     Genre.findOrCreate({ where: { name: currentGenre.name } });
   });
 
   genresByDb = await Genre.findAll();
 
-  // genresByDb = JSON.stringify(genresByDb);
-  // genresByDb = JSON.parse(genresByDb);
   return genresByDb;
+};
+
+const getGenreByName = async (name) => {
+  let genresByDb = await Genre.findAll();
+
+  if (!genresByDb.length) genresByDb = await getGenres();
+
+  const genre = genresByDb.filter((gen) => gen.name === name);
+
+  if (!genre.length) throw new Error("Genre not found");
+
+  return genre[0];
 };
 
 const putGenre = async (id, name) => {
   const genre = await Genre.findByPk(id);
+
   if (!genre) throw new Error("Genre not found");
 
   await Genre.update({ name }, { where: { id } });
@@ -62,4 +73,10 @@ const deleteGenre = async (id) => {
   return "Genre removed successfully";
 };
 
-module.exports = { getGenres, putGenre, postGenre, deleteGenre };
+module.exports = {
+  getGenres,
+  getGenreByName,
+  putGenre,
+  postGenre,
+  deleteGenre,
+};

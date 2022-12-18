@@ -43,7 +43,7 @@ const getVideogame = async (idVideogame) => {
     rating: data.rating,
     image: data.background_image,
     genres: data.genres.map((gen) => gen.name),
-    platforms: data.parent_platforms.map((pl) => pl.platform.name),
+    platforms: data.platforms.map((pl) => pl.platform.name),
   };
 
   return game;
@@ -72,8 +72,6 @@ const postVideogame = async (videogame) => {
       name: genres,
     },
   });
-
-  platforms.map((pl) => Platform.findOrCreate({ where: { name: pl } }));
 
   const platformsSearch = await Platform.findAll({
     where: {

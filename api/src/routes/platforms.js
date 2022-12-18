@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const {
   getPlatforms,
+  getPlatformByName,
   putPlatform,
   postPlatform,
   deletePlatform,
@@ -12,6 +13,18 @@ router.get("/", async (req, res) => {
   try {
     const platforms = await getPlatforms();
     res.status(200).json(platforms);
+  } catch (err) {
+    res.status(500).json(err.message);
+  }
+});
+
+router.get("/:name", async (req, res) => {
+  try {
+    const { name } = req.params;
+
+    const platform = await getPlatformByName(name);
+
+    res.status(200).json(platform);
   } catch (err) {
     res.status(500).json(err.message);
   }
