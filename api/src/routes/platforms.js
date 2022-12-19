@@ -1,67 +1,16 @@
 const { Router } = require("express");
-const {
-  getPlatforms,
-  getPlatformByName,
-  putPlatform,
-  postPlatform,
-  deletePlatform,
-} = require("../controllers/platforms");
+const platformController = require("../controllers/platformController");
 
 const router = Router();
 
-router.get("/", async (req, res) => {
-  try {
-    const platforms = await getPlatforms();
-    res.status(200).json(platforms);
-  } catch (err) {
-    res.status(500).json(err.message);
-  }
-});
+router.get("/", platformController.getPlatforms);
 
-router.get("/:name", async (req, res) => {
-  try {
-    const { name } = req.params;
+router.get("/:name", platformController.getPlatformByName);
 
-    const platform = await getPlatformByName(name);
+router.put("/", platformController.putPlatform);
 
-    res.status(200).json(platform);
-  } catch (err) {
-    res.status(500).json(err.message);
-  }
-});
+router.post("/", platformController.postPlatform);
 
-router.put("/", async (req, res) => {
-  try {
-    const { id, name } = req.query;
-    const updatePlatform = await putPlatform(id, name);
-
-    res.status(200).json(updatePlatform);
-  } catch (err) {
-    res.status(500).json(err.message);
-  }
-});
-
-router.post("/", async (req, res) => {
-  try {
-    const { name } = req.query;
-    const platformCreated = await postPlatform(name);
-
-    res.status(200).json(platformCreated);
-  } catch (err) {
-    res.status(500).json(err.message);
-  }
-});
-
-router.delete("/", async (req, res) => {
-  try {
-    const { id } = req.query;
-
-    const destroyPlatform = await deletePlatform(id);
-
-    res.status(200).json(destroyPlatform);
-  } catch (err) {
-    res.status(500).json(err.message);
-  }
-});
+router.delete("/", platformController.deletePlatform);
 
 module.exports = router;

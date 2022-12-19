@@ -145,7 +145,7 @@ export const rootReducer = (state = initialState, action) => {
         action.payload === "All"
           ? state.videogames
           : state.videogames.filter((game) =>
-              game.genres.includes(action.payload)
+              game.genres?.includes(action.payload)
             );
 
       return {
@@ -159,7 +159,7 @@ export const rootReducer = (state = initialState, action) => {
         action.payload === "All"
           ? state.videogames
           : state.videogames.filter((game) =>
-              game.platforms.includes(action.payload)
+              game.platforms?.includes(action.payload)
             );
 
       return {

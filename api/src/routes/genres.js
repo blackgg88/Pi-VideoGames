@@ -1,66 +1,15 @@
 const { Router } = require("express");
 const router = Router();
-const {
-  getGenres,
-  getGenreByName,
-  putGenre,
-  postGenre,
-  deleteGenre,
-} = require("../controllers/genres");
+const genreController = require("../controllers/genreController");
 
-router.get("/", async (req, res) => {
-  try {
-    const genres = await getGenres();
-    res.status(200).json(genres);
-  } catch (err) {
-    res.status(500).json(err.message);
-  }
-});
+router.get("/", genreController.getGenres);
 
-router.get("/:name", async (req, res) => {
-  try {
-    const { name } = req.params;
+router.get("/:name", genreController.getGenreByName);
 
-    const genre = await getGenreByName(name);
+router.put("/", genreController.putGenre);
 
-    res.status(200).json(genre);
-  } catch (err) {
-    res.status(500).json(err.message);
-  }
-});
+router.post("/", genreController.postGenre);
 
-router.put("/", async (req, res) => {
-  try {
-    const { id, name } = req.query;
-    const updateGenre = await putGenre(id, name);
-
-    res.status(200).json(updateGenre);
-  } catch (err) {
-    res.status(500).json(err.message);
-  }
-});
-
-router.post("/", async (req, res) => {
-  try {
-    const { name } = req.query;
-    const genreCreated = await postGenre(name);
-
-    res.status(200).json(genreCreated);
-  } catch (err) {
-    res.status(500).json(err.message);
-  }
-});
-
-router.delete("/", async (req, res) => {
-  try {
-    const { id } = req.query;
-
-    const destroyGenre = await deleteGenre(id);
-
-    res.status(200).json(destroyGenre);
-  } catch (err) {
-    res.status(500).json(err.message);
-  }
-});
+router.delete("/", genreController.deleteGenre);
 
 module.exports = router;

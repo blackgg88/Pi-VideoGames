@@ -44,6 +44,7 @@ export default function Home() {
   const totalPages = Math.ceil(videogames?.length / howManyGames);
 
   function handleFilters() {
+    dispatch(setPage(1));
     dispatch(orderByName(filters.order));
     dispatch(genresFilter(filters.genres));
     dispatch(platformsFilter(filters.platforms));
@@ -51,29 +52,28 @@ export default function Home() {
   }
 
   useEffect(() => {
-    !allVideogames.length && dispatch(getVideogames());
-    !platforms.length && dispatch(getPlatforms());
-    !genres.length && dispatch(getGenres());
+    if (!allVideogames.length) dispatch(getVideogames());
+    if (!platforms.length) dispatch(getPlatforms());
+    if (!genres.length) dispatch(getGenres());
+  }, []);
+
+  useEffect(() => {
     handleFilters();
   }, [filters]);
 
   function handleOrder(e) {
-    dispatch(setPage(1));
     dispatch(setFilter({ order: e.target.value }));
   }
 
   function handleFilterGenre(e) {
-    dispatch(setPage(1));
     dispatch(setFilter({ genres: e.target.value }));
   }
 
   function handleFilterPlatform(e) {
-    dispatch(setPage(1));
     dispatch(setFilter({ platforms: e.target.value }));
   }
 
   function handleFilterCreated(e) {
-    dispatch(setPage(1));
     dispatch(setFilter({ origin: e.target.value }));
   }
 

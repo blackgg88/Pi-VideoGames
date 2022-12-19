@@ -1,57 +1,13 @@
 const { Router } = require("express");
 const router = Router();
-const {
-  getVideogame,
-  postVideogame,
-  putVideogame,
-  deleteVideogame,
-} = require("../controllers/videogame");
+const videogameController = require("../controllers/videogameController");
 
-router.get("/:idVideogame", async (req, res) => {
-  const { idVideogame } = req.params;
+router.get("/:id", videogameController.getVideogameByID);
 
-  try {
-    const game = await getVideogame(idVideogame);
+router.post("/", videogameController.postVideogame);
 
-    res.status(200).json(game);
-  } catch (err) {
-    res.status(404).json(err.message);
-  }
-});
+router.put("/:id", videogameController.putVideogame);
 
-router.post("/", async (req, res) => {
-  try {
-    const createdGame = await postVideogame(req.body);
-
-    res.status(200).json(createdGame);
-  } catch (err) {
-    res.status(400).json(err.message);
-  }
-});
-
-router.put("/:idVideogame", async (req, res) => {
-  try {
-    const { idVideogame } = req.params,
-      { rating } = req.query;
-
-    const updateGame = await putVideogame(idVideogame, rating);
-
-    res.status(200).json(updateGame);
-  } catch (err) {
-    res.json(err.message);
-  }
-});
-
-router.delete("/:idVideogame", async (req, res) => {
-  try {
-    const { idVideogame } = req.params;
-
-    const destroyGame = await deleteVideogame(idVideogame);
-
-    res.status(200).json(destroyGame);
-  } catch (err) {
-    res.json(err.message);
-  }
-});
+router.delete("/:id", videogameController.deleteVideogame);
 
 module.exports = router;
