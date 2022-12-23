@@ -9,12 +9,14 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./Form.module.css";
 import frontImage from "../../assets/pexels-photo-3165335.jpeg";
 import logo from "../../assets/logo2.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { validateInput } from "./validation";
 import { useEffect } from "react";
 
 export default function Form() {
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   const genres = useSelector((state) => state.genres);
   let platforms = useSelector((state) => state.platforms);
@@ -55,20 +57,25 @@ export default function Form() {
     setErrors(validateInput({ ...game, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(postVideogame(game));
-    dispatch(clearVideoGames());
+    const postGame = await dispatch(postVideogame(game));
 
-    setGame({
-      name: "",
-      description: "",
-      image: "",
-      release_date: "",
-      rating: "",
-      genres: [],
-      platforms: [],
-    });
+    if (postGame) {
+      dispatch(clearVideoGames());
+
+      setGame({
+        name: "",
+        description: "",
+        image: "",
+        release_date: "",
+        rating: "",
+        genres: [],
+        platforms: [],
+      });
+
+      navigate("/home");
+    }
   };
 
   const handleSelect = (e) => {

@@ -125,6 +125,10 @@ export const postVideogame = (videogame) => {
       const data = await response.json();
 
       alert(data);
+
+      if (data.includes("exists")) return false;
+
+      return true;
     } catch (err) {
       console.log(err.message);
       alert("Error requesting the data from the API");
