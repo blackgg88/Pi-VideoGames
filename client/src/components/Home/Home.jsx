@@ -185,7 +185,6 @@ export default function Home() {
                 key={videogame.name}
               >
                 <Card
-                  key={videogame.name}
                   id={videogame.id}
                   name={videogame.name}
                   image={videogame.image}
