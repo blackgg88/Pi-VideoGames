@@ -140,8 +140,7 @@ export default function Form() {
 
             <div className={styles.released}>
               <input
-                placeholder="Release Date: AAAA-MM-DD"
-                type="text"
+                type="date"
                 name="release_date"
                 value={game.release_date}
                 onChange={handleInputChange}
